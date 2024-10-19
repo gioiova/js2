@@ -235,11 +235,11 @@ products.forEach((product) => {
                             Add to bag
                         </button>
                     </div>
-                    <button id="like-btn" class="flex-none flex items-center justify-center w-12 h-12 text-slate-300 border border-slate-200" type="button" aria-label="Like">
-                        <svg id="heart-icon" class="w-5 h-5" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-                        </svg>
-                    </button>
+                   <button class="like-btn flex-none flex items-center justify-center w-12 h-12 text-slate-300 border border-slate-200" type="button" aria-label="Like">
+                      <svg class="heart-icon w-5 h-5" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                      </svg>
+                  </button>
                 </div>
                 <p class="text-sm text-slate-500">
                     Free shipping on all continental US orders.
@@ -248,7 +248,20 @@ products.forEach((product) => {
         </div>
     `;
 
-    
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const likeButtons = document.querySelectorAll('.like-btn');
+  
+      likeButtons.forEach(button => {
+          let isLiked = false;
+          
+          button.addEventListener('click', () => {
+              isLiked = !isLiked;
+              const heartIcon = button.querySelector('.heart-icon');
+              heartIcon.style.color = isLiked ? '#ef4444' : '#cbd5e1';
+          });
+      });
+  });
   
 
     productPage.appendChild(singleProduct);
