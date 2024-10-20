@@ -123,10 +123,13 @@ const products = [
 
 
 
+
+let cartItems = []
 const productPage = document.getElementById('main');
 
+
 products.forEach((product) => {
-    const { title, price, description, image, rating } = product;
+    const { id, title, price, description, image, rating } = product;
     const singleProduct = document.createElement('div');
     
     singleProduct.classList.add("product_card");
@@ -228,10 +231,11 @@ products.forEach((product) => {
                 </div>
                 <div class="flex space-x-4 mb-5 text-sm font-medium">
                     <div class="flex-auto flex space-x-4 pr-4">
-                        <button class="flex-none w-1/2 h-12 uppercase font-medium tracking-wider bg-slate-900 text-white transition-transform duration-500 ease-in-out transform hover:scale-110 " type="submit">
+                        <button class="buy_now flex-none w-1/2 h-12 uppercase font-medium tracking-wider bg-slate-900 text-white transition-transform duration-500 ease-in-out transform hover:scale-110 " type="submit">
                             Buy now
                         </button>
-                        <button class="flex-none w-1/2 h-12 uppercase font-medium tracking-wider border border-slate-200 text-slate-900 transition-transform duration-500 ease-in-out transform hover:scale-110" type="button">
+                        <button class="add_to_cart flex-none w-1/2 h-12 uppercase font-medium tracking-wider border border-slate-200 text-slate-900 transition-transform duration-500 ease-in-out transform hover:scale-110" type="button"
+                        onclick=" ">
                             Add to bag
                         </button>
                     </div>
@@ -262,12 +266,48 @@ products.forEach((product) => {
           });
       });
   });
+
+
   
+  singleProduct.querySelector(".add_to_cart").addEventListener("click",() => {
+    addToCart(id)
+
+  });
+
+  singleProduct.querySelector(".buy_now").addEventListener("click",() => {
+    navigaateToProductPage(id);
+  });
 
     productPage.appendChild(singleProduct);
-    
-
+   
 });
 
+
+const addToCart = (id) => {
+  const product = products.find((product) => product.id === id);
+  cartItems.push(product);
+  console.log(cartItems);
+  updateCartUrl();
+};
+
+let url;
+const updateCartUrl = () => {
+  const cartItemsIds = cartItems.map((item) => item.id).join(",");
+  const currentURL = new URL(window.location.href);
+  currentURL.searchParams.set("cart",cartItemsIds);
+  console.log(currentURL.search);
+  const newURl = currentURL.search;
+  url = `cart.html${newURl}`
+  console.log(url)
+};
+
+const cartButton = document.getElementById("cart")
+
+
+const navigaateToProductPage = () => {
+  window.location.href = url;
+}
+
+cartButton.addEventListener("click",navigaateToProductPage);
 
 
