@@ -278,6 +278,7 @@ products.forEach((product) => {
     navigaateToProductPage(id);
   });
 
+
     productPage.appendChild(singleProduct);
    
 });
@@ -309,5 +310,6 @@ const navigaateToProductPage = () => {
 }
 
 cartButton.addEventListener("click",navigaateToProductPage);
+
 
 

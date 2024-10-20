@@ -123,8 +123,7 @@ const products = [
 
 const searchParams = new URLSearchParams(window.location.search);
 
-const productID = searchParams.get("cart");
-
+const productID = searchParams.get("cart") || "";
 let cartArray = productID.split(",").map(Number) ;
 console.log(cartArray)
 
@@ -138,10 +137,28 @@ let cartProducts = products.filter((product) =>
 const productPage = document.getElementById("main");
 const totalPriceContainer = document.getElementById("finalPrice");
 
+
 const calculateTotalPrice = () => {
-    const totalPrice = cartProducts.reduce((acc, product) => acc + product.price, 0);
-    totalPriceContainer.innerText = `Total Price: $${totalPrice.toFixed(2)}`;
-  };
+  const totalPrice = cartProducts.reduce((acc, product) => acc + product.price, 0);
+  totalPriceContainer.innerText = `Total Price: $${totalPrice.toFixed(2)}`;
+  return totalPrice; 
+};
+
+
+
+
+const checkoutButton = document.getElementById('checkoutBtn');
+checkoutButton.addEventListener('click', () => {
+  const totalPrice = calculateTotalPrice();
+  console.log(`Total Price Calculated: ${totalPrice}`); 
+
+  if (totalPrice !== undefined && totalPrice !== null) {
+      console.log(`Redirecting to checkout with total price: $${totalPrice.toFixed(2)}`);
+      window.location.href = `checkout.html?totalPrice=${totalPrice.toFixed(2)}&cart=${cartArray.join(",")}`;
+  } else {
+      console.error('Total price is undefined or null');
+  }
+});
 
   const renderProducts = () => {
     cartProducts.forEach((product) => {
@@ -211,4 +228,5 @@ const deleteProduct = (productId) => {
     }
   });
   
+
   renderProducts();
