@@ -132,7 +132,6 @@ let cartProducts = products.filter((product) =>
     cartArray.includes(product.id)
 )
 
-//console.log(cartProducts)
 
 const productPage = document.getElementById("main");
 const totalPriceContainer = document.getElementById("finalPrice");
@@ -186,41 +185,33 @@ checkoutButton.addEventListener('click', () => {
         </div>
       `;
   
-      // Append the product to the main container
       productPage.appendChild(singleProduct);
     });
   
-    // Calculate total price after rendering products
     calculateTotalPrice();
   };
 
-// Function to delete a product from the cart
 const deleteProduct = (productId) => {
-    // Remove the product from cartProducts array
     cartProducts = cartProducts.filter(product => product.id !== productId);
 
     cartArray = cartArray.filter(id => id !== productId);
 
 
 
-    // Remove the product card from the DOM
 
     const newCartParam = cartArray.join(',');
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.set('cart', newCartParam);
     window.history.pushState({}, '', newUrl);
-    // Clear the current products from the display
     productPage.innerHTML = '';
 
     console.log(cartArray)
     
-    // Re-render the products and total price
     renderProducts();
 
     
   };
   
-  // Attach event listeners to delete buttons
   productPage.addEventListener('click', (event) => {
     if (event.target.closest('.delete')) {
       const productId = parseInt(event.target.closest('.delete').dataset.id);
